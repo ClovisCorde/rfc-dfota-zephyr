@@ -1,0 +1,33 @@
+# Delta Firmware update
+
+# Copyright (c) 2023 Kickmaker
+# SPDX-License-Identifier: Apache-2.0
+
+#
+# Delta update
+#
+
+menuconfig DELTA_UPDATE
+	bool "Delta Firmware update"
+	depends on HEATSHRINK
+	help
+	  This option enables support for managing Delta Firmware Update.
+
+if DELTA_UPDATE
+
+module = DELTA_UPDATE
+module-str = delta_update
+source "subsys/logging/Kconfig.template.log_config"
+
+choice
+	prompt "Algorithm apply patch"
+	default BSDIFF_ALGO
+
+config BSDIFF_ALGO
+	bool "Use bsdiff algorithm to apply the patch"
+	help
+	  Enables support to use bspatch.
+
+endchoice
+
+endif # DELTA_UPDATE
